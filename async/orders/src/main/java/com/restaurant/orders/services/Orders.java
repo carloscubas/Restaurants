@@ -2,6 +2,7 @@ package com.restaurant.orders.services;
 
 import com.restaurant.orders.model.Item;
 import com.restaurant.orders.model.Order;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -11,6 +12,9 @@ import java.util.Map;
 
 @Service
 public class Orders {
+
+    @Autowired
+    RabbitMQSender rabbitMQSender;
 
     private final Map<Integer, Item> itens = new HashMap<>();
 
@@ -36,7 +40,7 @@ public class Orders {
             itemsOrder.add(itens.get(idOrder));
         }
 
-        new Order(id, itemsOrder);
+        rabbitMQSender.send(new Order(id, itemsOrder));
         return id;
     }
 }

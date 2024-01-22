@@ -20,4 +20,12 @@ public class Order {
     public void setItens(List<Item> itens) {
         this.itens = itens;
     }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", itens=" + itens +
+                '}';
+    }
 }

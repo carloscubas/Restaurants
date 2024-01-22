@@ -2,6 +2,7 @@ package com.restaurant.orders.controllers;
 
 import com.restaurant.orders.model.Item;
 import com.restaurant.orders.services.Orders;
+import com.restaurant.orders.services.RabbitMQSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
