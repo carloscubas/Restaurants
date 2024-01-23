@@ -37,7 +37,9 @@ public class Orders {
 
         List<Item> itemsOrder = new ArrayList<>();
         for(Integer idOrder: ordersCustomer){
-            itemsOrder.add(itens.get(idOrder));
+            if(itens.containsKey(idOrder)){
+                itemsOrder.add(itens.get(idOrder));
+            }
         }
 
         rabbitMQSender.send(new Order(id, itemsOrder));

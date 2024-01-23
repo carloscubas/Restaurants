@@ -18,8 +18,8 @@ public class RabbitMQSender {
     @Value("${cubas.rabbitmq.routingkey}")
     private String routingkey;
 
-    public void send(Order Order) {
-        rabbitTemplate.convertAndSend(exchange, routingkey, Order);
-        System.out.println("Send msg = " + Order);
+    public void send(Order order) {
+        rabbitTemplate.convertAndSend(exchange, routingkey, order);
+        System.out.println("Send msg = " + order);
     }
 }

@@ -1,4 +1,4 @@
-package com.restaurant.orders.model;
+package com.restaurant.cooking.model;
 
 public class Item {
 
