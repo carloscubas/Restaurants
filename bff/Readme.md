@@ -1,3 +1,4 @@
+''''
 query menu {
     menu {
         name
@@ -5,3 +6,9 @@ query menu {
         value
     }
 }
+''''
+
+# References:
+* https://www.danvega.dev/blog/graphql-mutations
+* https://graphql.org/learn/queries/
+* https://spring.io/guides/gs/graphql-server
