@@ -23,6 +23,7 @@ public class Orders {
         itens.put(1, new Item(1, "lasanha", 30.0));
         itens.put(2, new Item(2, "churrasco", 60.0));
         itens.put(3, new Item(3, "peixe", 80.0));
+        itens.put(3, new Item(3, "bacalhau", 130.0));
     }
 
     public Map<Integer, Item> getItensMenu(){
