@@ -1,7 +1,7 @@
 package com.restaurant.bff.services;
 
 import com.restaurant.bff.model.Item;
-import org.springframework.http.ResponseEntity;
+import com.restaurant.bff.model.Order;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -16,5 +16,16 @@ public class BffServices {
         RestTemplate restTemplate = new RestTemplate();
         Map<Integer, Item> menu =  restTemplate.getForObject("http://localhost:8095/menu", Map.class);
         return new ArrayList<>(menu.values());
+    }
+
+    public List<Order> listOrders(){
+        RestTemplate restTemplate = new RestTemplate();
+        Map<Integer, Order> orders =  restTemplate.getForObject("http://localhost:8090/orders", Map.class);
+        return new ArrayList<>(orders.values());
+    }
+
+    public Integer makeOrder(Order order){
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.postForObject("http://localhost:8095/order", order.getItems(), Integer.class);
     }
 }

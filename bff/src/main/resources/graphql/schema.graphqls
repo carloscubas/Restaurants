@@ -1,9 +1,10 @@
 type Query {
     menu : [Item]
+    listOrders : [OrderCustomer]
 }
 
 type Mutation {
-    createOrder(order: Order) : Boolean
+    createOrder(order: Order) : Int
 }
 
 input Order {
@@ -15,4 +16,9 @@ type Item {
     id: ID
     name: String
     value: Float
+}
+
+type OrderCustomer {
+    id: ID
+    items: [Item]
 }

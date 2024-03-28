@@ -16,6 +16,7 @@ public class Orders {
     }
 
     public Map<Integer, Order> getOrders() {
+        System.out.println(orders);
         return orders;
     }
 }

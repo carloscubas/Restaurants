@@ -6,34 +6,34 @@ public class Order {
 
     private int id;
 
-    private List<Item> itens;
+    private List<Item> items;
 
     public Order(int id, List<Item> itens) {
         this.id = id;
-        this.itens = itens;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setItens(List<Item> itens) {
-        this.itens = itens;
+        this.items = itens;
     }
 
     public int getId() {
         return id;
     }
 
-    public List<Item> getItens() {
-        return itens;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
     }
 
     @Override
     public String toString() {
         return "Order{" +
                 "id=" + id +
-                ", itens=" + itens +
+                ", items=" + items +
                 '}';
     }
 }

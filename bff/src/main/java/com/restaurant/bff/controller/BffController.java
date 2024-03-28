@@ -1,5 +1,10 @@
 package com.restaurant.bff.controller;
 
+/*
+    Test Url
+    http://localhost:8080/graphiql?path=/graphql
+ */
+
 import com.restaurant.bff.model.Item;
 import com.restaurant.bff.model.Order;
 import com.restaurant.bff.services.BffServices;
@@ -8,11 +13,8 @@ import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Vector;
+
 
 @Controller
 public class BffController {
@@ -33,14 +35,31 @@ public class BffController {
         return bffServices.getMenu();
     }
 
+    /* query listOrders {
+         listOrders{
+            id
+          items{
+            id
+            name
+            value
+          }
+        }
+    }*/
+
+    @QueryMapping
+    public List<Order> listOrders() {
+        return bffServices.listOrders();
+    }
+
     /* Mutation example
     mutation CreateOrder{
-        createOrder(order: {id:1 item:[1,2]})
+        createOrder(order: {id:1 items:[1,2]})
     } */
 
     @MutationMapping
-    public boolean createOrder(@Argument Order order) {
+    public Integer createOrder(@Argument Order order) {
+        Integer idOrder = bffServices.makeOrder(order);
         System.out.println(order);
-        return true;
+        return idOrder;
     }
 }
