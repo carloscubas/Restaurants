@@ -5,8 +5,10 @@ import com.restaurant.orders.services.Orders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 public class Controllers {
@@ -15,8 +17,8 @@ public class Controllers {
     private Orders orders;
 
     @GetMapping("/menu")
-    public Map<Integer, Item> menu(@RequestParam(value = "name", defaultValue = "World") String name) {
-        return orders.getItensMenu();
+    public List<Item> menu(@RequestParam(value = "name", defaultValue = "World") String name) {
+        return new ArrayList<>(orders.getItensMenu().values());
     }
 
     @PostMapping("/order")
