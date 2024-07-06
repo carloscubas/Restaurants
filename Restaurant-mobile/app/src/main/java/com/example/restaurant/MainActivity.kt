@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     private val orders: ArrayList<Menu> = ArrayList()
     private var checkoutValue: TextView? = null
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main);
@@ -46,19 +47,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.checkout -> {
-                val retrofitClient = NetworkUtils
-                    .getRetrofitInstance("http://192.168.5.137:8095/")
-                val endpoint = retrofitClient.create(Endpoint::class.java)
-                val callback = endpoint.makeOrder(makeOrder(orders))
-                callback.enqueue(object : Callback<Int> {
-                    override fun onResponse(call: Call<Int>, response: Response<Int>) {
-                        Toast.makeText(baseContext, "Pedido feito com Sucesso", Toast.LENGTH_SHORT).show()
-                    }
-
-                    override fun onFailure(call: Call<Int>, t: Throwable) {
-                        Toast.makeText(baseContext, t.message, Toast.LENGTH_SHORT).show()
-                    }
-                })
+                Toast.makeText(baseContext, "Pedido feito com Sucesso", Toast.LENGTH_SHORT).show()
                 return false
             }
             else -> return super.onOptionsItemSelected(item)
@@ -66,38 +55,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getMenu()  {
-        val retrofitClient = NetworkUtils
-            .getRetrofitInstance("http://192.168.5.137:8095/")
+        val itemsMenu = arrayListOf(Menu(id = 1, name = "Lasanha", value = 134.0),
+            Menu(id = 2, name = "Frango assado", value = 80.0),
+            Menu(id = 3, name = "Feijoada", value = 170.0))
+        val adapter = ArrayAdapter<Menu>(this@MainActivity, android.R.layout.simple_list_item_1, itemsMenu.toTypedArray())
+        val list: ListView = findViewById(R.id.lista);
 
-        val endpoint = retrofitClient.create(Endpoint::class.java)
-        val callback = endpoint.getItems()
+        list.setOnItemClickListener { _, _, posicao, _ ->
+            orders.add(itemsMenu[posicao])
+            checkoutValue?.text = "Total pedido: R$" + getTotalPrice(orders).toString()
+        }
 
-        callback.enqueue(object : Callback<List<Menu>> {
-            override fun onFailure(call: Call<List<Menu>>, t: Throwable) {
-                Toast.makeText(baseContext, t.message, Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onResponse(call: Call<List<Menu>>, response: Response<List<Menu>>) {
-                if (response.isSuccessful) {
-                    response.body()?.let {
-                        val itemsMenu = mutableListOf<Menu>()
-                        for (menu in it) {
-                            itemsMenu.add(menu)
-                        }
-
-                        val adapter = ArrayAdapter<Menu>(this@MainActivity, android.R.layout.simple_list_item_1, itemsMenu.toTypedArray())
-                        val list: ListView = findViewById(R.id.lista);
-
-                        list.setOnItemClickListener { _, _, posicao, _ ->
-                            orders.add(itemsMenu[posicao])
-                            checkoutValue?.text = "Total pedido: R$" + getTotalPrice(orders).toString()
-                        }
-                        list.adapter  = adapter
-                        adapter.notifyDataSetChanged()
-                    }
-                }
-            }
-        })
+        list.adapter  = adapter
+        adapter.notifyDataSetChanged()
     }
 
     private fun getTotalPrice(orders: ArrayList<Menu>) : Double {
@@ -106,13 +76,5 @@ class MainActivity : AppCompatActivity() {
             total += it.value
         }
         return total
-    }
-
-    private fun makeOrder(orders: ArrayList<Menu>) : ArrayList<Long> {
-        val idOrders: ArrayList<Long> = ArrayList()
-        orders.forEach {
-            idOrders.add(it.id.toLong())
-        }
-        return idOrders
     }
 }
