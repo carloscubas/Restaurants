@@ -43,5 +43,5 @@
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
     <string name="carrinho">Carrinho</string>
-    <string name="r_00_00">R$ 00,00</string>
+    <string name="r_00_00">Total pedido: R$ 00,00</string>
 </resources>

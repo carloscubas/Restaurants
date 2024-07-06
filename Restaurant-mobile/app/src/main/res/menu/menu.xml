@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/checkout"
-        android:icon="@drawable/ic_novo"
+        android:icon="@drawable/order"
         android:title="@string/carrinho"
         app:showAsAction="always"/>
 

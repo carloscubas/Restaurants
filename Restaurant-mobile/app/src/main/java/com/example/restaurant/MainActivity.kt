@@ -21,7 +21,6 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
-    private var list: ListView? = null
     private val orders: ArrayList<Menu> = ArrayList()
     private var checkoutValue: TextView? = null
 
@@ -48,12 +47,12 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.checkout -> {
                 val retrofitClient = NetworkUtils
-                    .getRetrofitInstance("http://192.168.5.138:8095/")
+                    .getRetrofitInstance("http://192.168.5.137:8095/")
                 val endpoint = retrofitClient.create(Endpoint::class.java)
                 val callback = endpoint.makeOrder(makeOrder(orders))
                 callback.enqueue(object : Callback<Int> {
                     override fun onResponse(call: Call<Int>, response: Response<Int>) {
-                        Toast.makeText(baseContext, "Sucesso", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(baseContext, "Pedido feito com Sucesso", Toast.LENGTH_SHORT).show()
                     }
 
                     override fun onFailure(call: Call<Int>, t: Throwable) {
@@ -68,7 +67,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun getMenu()  {
         val retrofitClient = NetworkUtils
-            .getRetrofitInstance("http://192.168.5.138:8095/")
+            .getRetrofitInstance("http://192.168.5.137:8095/")
 
         val endpoint = retrofitClient.create(Endpoint::class.java)
         val callback = endpoint.getItems()
@@ -89,11 +88,9 @@ class MainActivity : AppCompatActivity() {
                         val adapter = ArrayAdapter<Menu>(this@MainActivity, android.R.layout.simple_list_item_1, itemsMenu.toTypedArray())
                         val list: ListView = findViewById(R.id.lista);
 
-                        list.setOnItemLongClickListener { _, _, posicao, _ ->
-                            Toast.makeText(baseContext, posicao.toString(), Toast.LENGTH_SHORT).show()
+                        list.setOnItemClickListener { _, _, posicao, _ ->
                             orders.add(itemsMenu[posicao])
-                            checkoutValue?.text = "R$" + getTotalPrice(orders).toString()
-                            false
+                            checkoutValue?.text = "Total pedido: R$" + getTotalPrice(orders).toString()
                         }
                         list.adapter  = adapter
                         adapter.notifyDataSetChanged()

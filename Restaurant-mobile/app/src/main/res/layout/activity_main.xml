@@ -8,7 +8,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/holo_orange_dark"
+        android:background="@color/material_dynamic_neutral30"
         android:minHeight="?attr/actionBarSize"
         android:titleTextColor="@color/black" />
 
@@ -20,10 +20,14 @@
         android:textSize="30sp"
         android:text="@string/r_00_00" />
 
+    <View
+        android:layout_height="2dip"
+        android:background="#FF909090"
+        android:layout_width="match_parent"/>
+
     <ListView
         android:id="@+id/lista"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
+        android:layout_height="wrap_content" >
     </ListView>
-
 </LinearLayout>
