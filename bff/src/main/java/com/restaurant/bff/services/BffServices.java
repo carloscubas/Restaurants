@@ -14,8 +14,7 @@ public class BffServices {
 
     public List<Item> getMenu(){
         RestTemplate restTemplate = new RestTemplate();
-        Map<Integer, Item> menu =  restTemplate.getForObject("http://localhost:8095/menu", Map.class);
-        return new ArrayList<>(menu.values());
+        return restTemplate.getForObject("http://localhost:8095/menu", List.class);
     }
 
     public List<Order> listOrders(){
